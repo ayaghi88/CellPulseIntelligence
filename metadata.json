@@ -3,5 +3,8 @@
   "description": "An advanced mobile forensic and OSINT dashboard for real-time carrier tracing, number verification, and identity synthesis.",
   "requestFramePermissions": [
     "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
   ]
 }

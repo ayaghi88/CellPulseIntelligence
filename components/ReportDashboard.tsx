@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { IntelligenceReport } from '../types';
 
@@ -36,23 +35,28 @@ const ReportDashboard: React.FC<ReportDashboardProps> = ({ report, onReset }) =>
         <div className="absolute top-0 right-0 opacity-5 pointer-events-none select-none">
           <span className="text-[120px] font-black mono -mr-10 -mt-10 leading-none">FORENSIC</span>
         </div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-1">
+        <div className="relative z-10 w-full md:w-auto">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
              <span className="text-[10px] text-emerald-500 mono bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 uppercase font-bold tracking-widest">Target_Acquired</span>
              <span className="text-[10px] text-gray-500 mono uppercase">{report.location.timezone} / {report.location.country}</span>
+             <span className="text-[10px] text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2 py-0.5 rounded-full mono uppercase font-medium">
+               🔓 UNRESTRICTED_ACCESS
+             </span>
           </div>
           <h1 className="text-4xl md:text-5xl font-black mono tracking-tighter text-white">
             {report.phoneNumber}
           </h1>
           <p className="text-[10px] mono text-gray-500 mt-2 uppercase max-w-md">Primary MSISDN identifier. All results are synthesized via AI OSINT forensic protocols.</p>
         </div>
-        <button 
-          onClick={onReset}
-          className="relative z-10 px-8 py-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-xl mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 flex items-center gap-2 group"
-        >
-          <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
-          [ NEW_INVESTIGATION ]
-        </button>
+        <div className="flex flex-wrap gap-3 z-10">
+          <button 
+            onClick={onReset}
+            className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-xl mono text-xs font-bold transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95 flex items-center gap-2 group"
+          >
+            <svg className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+            [ NEW_INVESTIGATION ]
+          </button>
+        </div>
       </div>
 
       {/* Forensic Accuracy Warning */}
@@ -87,6 +91,7 @@ const ReportDashboard: React.FC<ReportDashboardProps> = ({ report, onReset }) =>
                 </span>
                 <span className="text-[9px] text-gray-400 mono mt-2 leading-relaxed">
                   <strong className="text-gray-300">Mobile:</strong> Physical hardware.<br/>
+                  <strong className="text-gray-300">Landline:</strong> Physical hardware tied to copper or fiber.<br/>
                   <strong className="text-gray-300">VoIP/Virtual:</strong> Software-based anonymity.
                 </span>
               </div>
@@ -192,7 +197,7 @@ const ReportDashboard: React.FC<ReportDashboardProps> = ({ report, onReset }) =>
                 </div>
              </div>
 
-            <div className="absolute top-6 left-6 z-10 bg-black/80 backdrop-blur-2xl p-4 border border-emerald-500/30 rounded-2xl text-[11px] mono text-emerald-400 space-y-2 shadow-2xl">
+            <div className="absolute top-6 left-6 z-10 bg-black/80 backdrop-blur-2xl p-4 border border-emerald-500/30 rounded-2xl text-[11px] mono text-emerald-400 space-y-2 shadow-2xl transition-all duration-300">
               <div className="flex justify-between gap-6 border-b border-emerald-500/10 pb-1 mb-1">
                 <span className="opacity-60">GEO_COORDS</span>
                 <span className="font-bold">{report.location.coordinates.lat.toFixed(4)}, {report.location.coordinates.lng.toFixed(4)}</span>
@@ -212,14 +217,18 @@ const ReportDashboard: React.FC<ReportDashboardProps> = ({ report, onReset }) =>
               <div className="space-y-6">
                 <p className="text-[9px] text-gray-400 mono mb-4 leading-relaxed">Mapping of digital artifacts associated with the terminal's registered identity.</p>
                 <div className="flex items-center gap-4 p-4 bg-white/5 rounded-2xl border border-white/5 shadow-inner">
-                  <div className="text-xl text-white font-black mono tracking-tight">{report.ownership.name || "UNIDENTIFIED"}</div>
+                  <div className="text-xl text-white font-black mono tracking-tight">
+                    {report.ownership.name || "UNIDENTIFIED OWNER"}
+                  </div>
                 </div>
                 <div className="space-y-3">
                   <div className="text-[9px] uppercase text-gray-500 mono font-bold border-l-2 border-emerald-500/30 pl-2 tracking-widest">Digital Footprint</div>
                   {report.ownership.associatedEmails.length > 0 ? report.ownership.associatedEmails.map((email, i) => (
-                    <div key={i} className="text-[11px] text-gray-400 font-mono bg-black/40 px-3 py-1.5 rounded border border-white/5 truncate">{email}</div>
+                    <div key={i} className="text-[11px] text-gray-400 font-mono bg-black/40 px-3 py-1.5 rounded border border-white/5 truncate">
+                      {email}
+                    </div>
                   )) : (
-                    <div className="text-[10px] text-gray-600 mono italic px-3 py-1.5">No emails identified.</div>
+                    <div className="text-[10px] text-gray-600 mono italic px-3 py-1.5">No emails identified in state leaks.</div>
                   )}
                 </div>
               </div>
@@ -234,7 +243,9 @@ const ReportDashboard: React.FC<ReportDashboardProps> = ({ report, onReset }) =>
                   <>
                     <div className="flex flex-col">
                       <span className="text-[9px] text-gray-500 mono uppercase mb-1">Inferred IP</span>
-                      <span className="text-xl text-emerald-400 font-black mono">{report.ipInfo.ipAddress}</span>
+                      <span className="text-xl text-emerald-400 font-black mono">
+                        {report.ipInfo.ipAddress}
+                      </span>
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[9px] text-gray-500 mono uppercase mb-1">Infrastructure</span>
@@ -251,12 +262,14 @@ const ReportDashboard: React.FC<ReportDashboardProps> = ({ report, onReset }) =>
           </div>
 
           {/* AI Synthesis */}
-          <div className="glass p-8 rounded-3xl border border-white/5">
+          <div className="glass p-8 rounded-3xl border border-white/5 relative overflow-hidden">
             <h3 className="text-[10px] uppercase tracking-[0.3em] text-emerald-500 mb-8 mono font-black border-b border-emerald-500/10 pb-3">Forensic Synthesis</h3>
             <p className="text-[9px] text-gray-400 mono mb-4 leading-relaxed">Automated intelligence summary correlating disparate signal artifacts.</p>
-            <p className="text-sm text-gray-300 leading-relaxed font-light italic pl-4 border-l-2 border-emerald-500/20 py-2">
-              {report.summary}
-            </p>
+            <div className="relative">
+              <p className="text-sm text-gray-300 leading-relaxed font-light italic pl-4 border-l-2 border-emerald-500/20 py-2">
+                {report.summary}
+              </p>
+            </div>
           </div>
 
           {/* Data Integrity & Sources */}
